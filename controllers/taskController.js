@@ -78,27 +78,33 @@ const updateTask = async (req, res) => {
 
     try {
 
+        const { title, status } = req.body;
+
+        const update = {};
+
+        if (title !== undefined) update.title = title;
+
+        if (status !== undefined) {
+            update.status = status;
+            
+            update.completedAt = status === "Completed" ? new Date() : null;
+        }
+
         const task = await Task.findOneAndUpdate(
             { _id: req.params.id, user: req.userId },
-            { title: req.body.title, status: req.body.status },
+            update,
             { new: true, runValidators: true }
         );
 
         if (!task) {
-
-            return res.status(404).json({
-                message: "Task not found"
-            });
-
+            return res.status(404).json({ message: "Task not found" });
         }
 
         res.status(200).json(task);
 
     } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
+        res.status(500).json({ message: error.message });
 
     }
 
