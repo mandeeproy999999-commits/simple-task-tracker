@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Task Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/6b6a0d7f0b.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <div class="container">
+
+        <header>
+
+            <h1>
+                <i class="fa-solid fa-list-check"></i>
+                Task Tracker
+            </h1>
+
+            <p>
+                Organize your day efficiently
+            </p>
+
+        </header>
+
+        <div class="stats">
+
+            <div class="card">
+                <h2 id="totalTasks">0</h2>
+                <span>Total</span>
+            </div>
+
+            <div class="card">
+                <h2 id="pendingTasks">0</h2>
+                <span>Pending</span>
+            </div>
+
+            <div class="card">
+                <h2 id="completedTasks">0</h2>
+                <span>Completed</span>
+            </div>
+
+        </div>
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search tasks...">
+
+        </div>
+
+        <div class="input-box">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="What needs to be done today?">
+
+            <button id="addBtn">
+
+                <i class="fa-solid fa-plus"></i>
+
+            </button>
+
+        </div>
+
+        <div id="taskList">
+
+        </div>
+
+        <div id="emptyState">
+
+            <i class="fa-regular fa-circle-check"></i>
+
+            <h3>No Tasks Yet</h3>
+
+            <p>Add your first task to get started.</p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
