@@ -2,7 +2,7 @@ const Task = require("../models/Task");
 
 const getTasks = async (req, res) => {
     try {
-        const tasks = await Task.find().sort({ createdAt: -1 });
+        const tasks = await Task.find({ user: req.userId }).sort({ createdAt: -1 });
 
         res.status(200).json(tasks);
 
@@ -29,9 +29,7 @@ const createTask = async (req, res) => {
 
         }
 
-        const task = await Task.create({
-            title
-        });
+        const task = await Task.create({ title, user: req.userId });
 
         res.status(201).json(task);
 
@@ -49,7 +47,10 @@ const deleteTask = async (req, res) => {
 
     try {
 
-        const task = await Task.findByIdAndDelete(req.params.id);
+        const task = await Task.findOneAndDelete({
+            _id: req.params.id,
+            user: req.userId
+        });
 
         if (!task) {
 
@@ -77,13 +78,10 @@ const updateTask = async (req, res) => {
 
     try {
 
-        const task = await Task.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true
-            }
+        const task = await Task.findOneAndUpdate(
+            { _id: req.params.id, user: req.userId },
+            { title: req.body.title, status: req.body.status },
+            { new: true, runValidators: true }
         );
 
         if (!task) {
