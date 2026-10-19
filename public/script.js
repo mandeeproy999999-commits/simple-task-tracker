@@ -1,5 +1,24 @@
 const API = "/api/tasks";
 
+const token = localStorage.getItem("token");
+
+if (!token) {
+    window.location.href = "auth.html";
+}
+
+function authHeaders() {
+    return {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    };
+}
+
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    window.location.href = "auth.html";
+}
+
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
@@ -15,7 +34,13 @@ let tasks = [];
 
 async function loadTasks() {
     try {
-        const res = await fetch(API);
+        const res = await fetch(API, { headers: authHeaders() });
+
+        if (res.status === 401) {
+            logout();
+            return;
+        }
+
         tasks = await res.json();
 
         renderTasks(tasks);
@@ -108,19 +133,22 @@ async function addTask() {
 
     if (!title) return;
 
-    await fetch(API, {
+    const res = await fetch(API, {
 
         method: "POST",
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: authHeaders(),
 
         body: JSON.stringify({
             title
         })
 
     });
+
+    if (res.status === 401) {
+        logout();
+        return;
+    }
 
     taskInput.value = "";
 
@@ -134,11 +162,18 @@ async function deleteTask(id) {
 
     if (!ok) return;
 
-    await fetch(`${API}/${id}`, {
+    const res = await fetch(`${API}/${id}`, {
 
-        method: "DELETE"
+        method: "DELETE",
+
+        headers: authHeaders()
 
     });
+
+    if (res.status === 401) {
+        logout();
+        return;
+    }
 
     loadTasks();
 

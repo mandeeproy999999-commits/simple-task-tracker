@@ -1,0 +1,32 @@
+.auth-box {
+    max-width: 380px;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.auth-box input,
+.auth-box button {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.auth-box button {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#errorMsg {
+    color: #ff6b6b;
+    min-height: 18px;
+    font-size: 14px;
+}
+
+.switch {
+    text-align: center;
+    font-size: 14px;
+}
