@@ -2,7 +2,7 @@ const Task = require("../models/Task");
 
 const getTasks = async (req, res) => {
     try {
-        const tasks = await Task.find().sort({ createdAt: -1 });
+        const tasks = await Task.find({ user: req.userId }).sort({ createdAt: -1 });
 
         res.status(200).json(tasks);
 
@@ -29,9 +29,7 @@ const createTask = async (req, res) => {
 
         }
 
-        const task = await Task.create({
-            title
-        });
+        const task = await Task.create({ title, user: req.userId });
 
         res.status(201).json(task);
 
@@ -49,7 +47,10 @@ const deleteTask = async (req, res) => {
 
     try {
 
-        const task = await Task.findByIdAndDelete(req.params.id);
+        const task = await Task.findOneAndDelete({
+            _id: req.params.id,
+            user: req.userId
+        });
 
         if (!task) {
 
@@ -77,30 +78,33 @@ const updateTask = async (req, res) => {
 
     try {
 
-        const task = await Task.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true
-            }
+        const { title, status } = req.body;
+
+        const update = {};
+
+        if (title !== undefined) update.title = title;
+
+        if (status !== undefined) {
+            update.status = status;
+            
+            update.completedAt = status === "Completed" ? new Date() : null;
+        }
+
+        const task = await Task.findOneAndUpdate(
+            { _id: req.params.id, user: req.userId },
+            update,
+            { new: true, runValidators: true }
         );
 
         if (!task) {
-
-            return res.status(404).json({
-                message: "Task not found"
-            });
-
+            return res.status(404).json({ message: "Task not found" });
         }
 
         res.status(200).json(task);
 
     } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
+        res.status(500).json({ message: error.message });
 
     }
 

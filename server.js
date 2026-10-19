@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const authRoutes = require("./routes/authRoutes");
 const path = require("path");
 const taskRoutes = require("./routes/taskRoutes");
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
 app.get("/api", (req, res) => {

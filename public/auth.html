@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Task Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="container auth-box">
+        <h1 id="formTitle">Login</h1>
+
+        <input type="text" id="username" placeholder="Username" autocomplete="username">
+        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+
+        <p id="errorMsg"></p>
+
+        <button id="submitBtn">Login</button>
+
+        <p class="switch">
+            <span id="switchText">New here?</span>
+            <a href="#" id="switchLink">Register</a>
+        </p>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
