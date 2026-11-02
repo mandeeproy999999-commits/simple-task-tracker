@@ -22,7 +22,7 @@
     font-family:'Poppins',system-ui,sans-serif;
 }
 
-/* Font Awesome ko apna font rakhne do (upar wala * rule usse override na kare) */
+
 .fa-solid,.fa-regular,.fas,.far{
     font-family:"Font Awesome 6 Free" !important;
 }
@@ -133,7 +133,7 @@ header p{
     font-size:.85rem;
 }
 
-/* Completed card ko hara rang, taaki alag dikhe */
+
 .stats .card:nth-child(3) h2{
     color:var(--success);
 }
